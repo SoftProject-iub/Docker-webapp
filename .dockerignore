@@ -1,0 +1,25 @@
+# Git
+.git
+.gitignore
+
+# Node modules
+node_modules
+
+# Logs
+*.log
+
+# Environment files
+.env
+
+# Mac files
+.DS_Store
+
+# VS Code
+.vscode
+
+# Temporary files
+tmp
+temp
+
+# Documentation
+README.md
