@@ -7,13 +7,22 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.get("/", (req, res) => {
+
   res.send(`
+
   <!DOCTYPE html>
   <html lang="en">
+
   <head>
+
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Sheezzi Cyber Dashboard</title>
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+
+    <title>Sheezzi Cyberpunk Dashboard</title>
 
     <style>
 
@@ -23,70 +32,119 @@ app.get("/", (req, res) => {
         box-sizing:border-box;
       }
 
-      body{
-        background: #050816;
-        font-family: Arial, sans-serif;
-        color: white;
-        overflow:hidden;
+      html,body{
+        width:100%;
+        min-height:100%;
+        overflow-x:hidden;
+        font-family:Arial,sans-serif;
+        background:#050816;
+        color:white;
       }
 
+      body{
+        position:relative;
+      }
+
+      /* Animated Background */
+
       .background{
-        position:absolute;
-        width:100%;
-        height:100%;
+        position:fixed;
+        inset:0;
+        z-index:-3;
+
         background:
-          radial-gradient(circle at top left, #00ffcc33, transparent 30%),
-          radial-gradient(circle at bottom right, #ff00ff22, transparent 30%),
-          #050816;
-        z-index:-2;
+          radial-gradient(circle at top left,#00ffff22,transparent 25%),
+          radial-gradient(circle at bottom right,#ff00ff22,transparent 25%),
+          linear-gradient(135deg,#050816,#0b1020,#050816);
       }
 
       .grid{
-        position:absolute;
-        width:100%;
-        height:100%;
+        position:fixed;
+        inset:0;
+        z-index:-2;
+
         background-image:
-          linear-gradient(rgba(0,255,255,0.07) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(0,255,255,0.07) 1px, transparent 1px);
+          linear-gradient(rgba(0,255,255,0.06) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0,255,255,0.06) 1px, transparent 1px);
+
         background-size:40px 40px;
-        z-index:-1;
+
+        animation:gridMove 10s linear infinite;
       }
 
+      @keyframes gridMove{
+
+        from{
+          transform:translateY(0px);
+        }
+
+        to{
+          transform:translateY(40px);
+        }
+
+      }
+
+      /* Main Container */
+
       .container{
-        height:100vh;
+        min-height:100vh;
+
         display:flex;
         justify-content:center;
         align-items:center;
-        flex-direction:column;
-        text-align:center;
+
         padding:20px;
       }
 
+      /* Main Card */
+
       .card{
-        background: rgba(255,255,255,0.05);
-        border:1px solid rgba(0,255,255,0.2);
-        backdrop-filter: blur(10px);
-        border-radius:20px;
+
+        width:100%;
+        max-width:950px;
+
         padding:50px;
-        width:90%;
-        max-width:800px;
+
+        border-radius:30px;
+
+        background:rgba(255,255,255,0.05);
+
+        border:1px solid rgba(0,255,255,0.2);
+
+        backdrop-filter:blur(14px);
+
         box-shadow:
-          0 0 20px #00ffff55,
-          0 0 40px #ff00ff22;
+          0 0 25px rgba(0,255,255,0.15),
+          0 0 60px rgba(255,0,255,0.08);
+
+        text-align:center;
+
       }
 
+      /* Title */
+
       h1{
-        font-size:70px;
-        margin-bottom:20px;
+
+        font-size:clamp(3rem,8vw,6rem);
+
+        margin-bottom:15px;
+
         color:#00ffff;
+
+        letter-spacing:5px;
+
         text-shadow:
           0 0 10px #00ffff,
           0 0 20px #00ffff,
           0 0 40px #00ffff;
-        animation: glow 2s infinite alternate;
+
+        animation:glow 2s ease-in-out infinite alternate;
+
+        word-break:break-word;
       }
 
       @keyframes glow{
+
         from{
           text-shadow:
             0 0 10px #00ffff,
@@ -96,79 +154,206 @@ app.get("/", (req, res) => {
         to{
           text-shadow:
             0 0 20px #00ffff,
-            0 0 40px #ff00ff,
-            0 0 60px #00ffff;
+            0 0 35px #ff00ff,
+            0 0 55px #00ffff;
         }
+
       }
 
       .subtitle{
-        font-size:24px;
+
         color:#cccccc;
+
+        font-size:clamp(1rem,2vw,1.4rem);
+
+        line-height:1.7;
+
         margin-bottom:40px;
+
       }
 
+      /* Status Grid */
+
       .stats{
+
         display:grid;
-        grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+
+        grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
         gap:20px;
-        margin-top:30px;
+
+        margin-top:20px;
       }
 
       .box{
-        padding:25px;
-        border-radius:15px;
-        background: rgba(0,0,0,0.4);
-        border:1px solid rgba(0,255,255,0.2);
-        transition:0.3s;
+
+        padding:28px 20px;
+
+        border-radius:20px;
+
+        background:rgba(0,0,0,0.4);
+
+        border:1px solid rgba(0,255,255,0.15);
+
+        transition:0.35s ease;
+
       }
 
       .box:hover{
-        transform:translateY(-5px) scale(1.03);
-        box-shadow:0 0 20px #00ffff55;
+
+        transform:translateY(-8px) scale(1.03);
+
+        box-shadow:
+          0 0 25px rgba(0,255,255,0.25);
+
+        border-color:#00ffff;
+
       }
 
       .box h2{
-        font-size:35px;
+
+        font-size:clamp(1.5rem,3vw,2.2rem);
+
+        margin-bottom:12px;
+
         color:#00ffcc;
-        margin-bottom:10px;
       }
 
       .box p{
-        color:#aaa;
-        font-size:18px;
+
+        color:#bbbbbb;
+
+        font-size:1rem;
+
+        line-height:1.5;
       }
+
+      /* Status Badge */
 
       .status{
+
         margin-top:35px;
-        display:inline-block;
-        padding:12px 25px;
-        border-radius:50px;
-        background:#00ffcc22;
-        border:1px solid #00ffcc55;
+
+        display:inline-flex;
+
+        align-items:center;
+        justify-content:center;
+
+        gap:10px;
+
+        padding:14px 24px;
+
+        border-radius:100px;
+
+        background:rgba(0,255,204,0.08);
+
+        border:1px solid rgba(0,255,204,0.25);
+
         color:#00ffcc;
+
         font-weight:bold;
-        box-shadow:0 0 15px #00ffcc55;
+
+        font-size:0.95rem;
+
+        box-shadow:
+          0 0 20px rgba(0,255,204,0.15);
+
+        flex-wrap:wrap;
       }
 
-      .footer{
-        margin-top:30px;
-        color:red;
-        font-size:14px;
+      .dot{
+
+        width:10px;
+        height:10px;
+
+        border-radius:50%;
+
+        background:#00ff88;
+
+        box-shadow:
+          0 0 10px #00ff88,
+          0 0 20px #00ff88;
+
+        animation:pulse 1.5s infinite;
       }
+
+      @keyframes pulse{
+
+        0%{
+          transform:scale(1);
+          opacity:1;
+        }
+
+        50%{
+          transform:scale(1.4);
+          opacity:0.6;
+        }
+
+        100%{
+          transform:scale(1);
+          opacity:1;
+        }
+
+      }
+
+      /* Footer */
+
+      .footer{
+
+        margin-top:35px;
+
+        color:#777;
+
+        font-size:0.95rem;
+
+        line-height:1.7;
+      }
+
+      /* Mobile */
 
       @media(max-width:768px){
 
+        .container{
+          padding:15px;
+        }
+
+        .card{
+
+          padding:30px 20px;
+
+          border-radius:22px;
+        }
+
+        .stats{
+          grid-template-columns:1fr;
+        }
+
+        .status{
+          width:100%;
+        }
+
+      }
+
+      /* Small Phones */
+
+      @media(max-width:420px){
+
         h1{
-          font-size:45px;
+          letter-spacing:2px;
         }
 
         .subtitle{
-          font-size:18px;
+          font-size:0.95rem;
+        }
+
+        .box{
+          padding:22px 16px;
         }
 
       }
 
     </style>
+
   </head>
 
   <body>
@@ -183,34 +368,42 @@ app.get("/", (req, res) => {
         <h1>SHEEZZI</h1>
 
         <p class="subtitle">
-          Cyberpunk Docker Dashboard Running on Railway 🚀
+          Cyberpunk Docker Dashboard Running Live on Railway 🚀
         </p>
 
         <div class="stats">
 
           <div class="box">
             <h2>ONLINE</h2>
-            <p>Server Status</p>
+            <p>Server running successfully with Express.js</p>
           </div>
 
           <div class="box">
             <h2>DOCKER</h2>
-            <p>Container Active</p>
+            <p>Containerized & optimized deployment</p>
           </div>
 
           <div class="box">
             <h2>RAILWAY</h2>
-            <p>Deployment Live</p>
+            <p>Production deployment active globally</p>
           </div>
 
         </div>
 
         <div class="status">
+
+          <div class="dot"></div>
+
           SYSTEM SECURED • ALL SERVICES RUNNING
+
         </div>
 
         <div class="footer">
-          Developed by Shahzad Nawaz ⚡
+
+          Developed by Shahzad Nawaz ⚡<br>
+
+          Node.js • Docker • Railway • Cyberpunk UI
+
         </div>
 
       </div>
@@ -218,8 +411,11 @@ app.get("/", (req, res) => {
     </div>
 
   </body>
+
   </html>
+
   `);
+
 });
 
 app.listen(PORT, "0.0.0.0", () => {
