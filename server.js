@@ -152,7 +152,7 @@ app.get("/", (req, res) => {
 
       .footer{
         margin-top:30px;
-        color:#666;
+        color:red;
         font-size:14px;
       }
 
